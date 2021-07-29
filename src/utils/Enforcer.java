@@ -1,16 +1,19 @@
 package utils;
 import java.io.IOException;
-import java.time.LocalTime;
+
+import javax.swing.GroupLayout.Group;
 
 import main.Main;
 import tracking.Downtime;
 import tracking.Program;
+import tracking.ProgramGroup;
+import tracking.TrackedObj.EnforceStage;
 import ui.Alert;
 
 public class Enforcer {
 
 	
-	public static void Enforce(Program program) {
+	public static void enforce(Program program) {
 		
 		// If the limit is a time limit
 		if(program.isTimeLimit()) {
@@ -80,5 +83,52 @@ public class Enforcer {
 		
 		
 		program.setStageEnforced(true);
+	}
+
+	public static void enforceGroup(ProgramGroup group){
+
+		if(group.getTimeRemaining() > 0 && group.getTimeRemaining() < 300){
+
+			if(!group.stageEnforced()){
+				group.setEnforcementStage(EnforceStage.WARN);
+			}
+
+		}else if(group.getTimeRemaining() <= 0){
+			group.advanceStage();
+		}
+
+		executeGroupStage(group);
+	}
+	private static void executeGroupStage(ProgramGroup group){
+
+		if(group.stageEnforced()){
+			return;
+		}
+
+		switch(group.getStage()){
+			case RUNNING:
+				return;
+			case WARN:
+				Alert.createWarning("Approaching time limit for: " + group.getName());
+				break;
+			case ENFORCE:
+				try {
+					for(Program p : group.getIncentives()){
+						
+						Main.os.killProcess(p.getProcess());
+
+					}
+					System.out.println("Closing the programs");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			case SHUTDOWN:
+				//TODO: Shutdown
+				System.out.println("Shutting down");
+				break;
+
+		}
+
 	}
 }

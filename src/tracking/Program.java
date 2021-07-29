@@ -4,19 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Program implements Serializable{
+public class Program extends TrackedObj implements Serializable{
 	
-	public static enum EnforceStage{
-		RUNNING,
-		WARN,
-		ENFORCE,
-		SHUTDOWN
-	}
+
 
 	private ArrayList<DayLimit> dayLimits;
-	private EnforceStage stage;
 	
-	private boolean stageEnforced = false;
 	private String name, process;
 	private ArrayList<Downtime> downtimes;
 	private String iconPath;
@@ -29,7 +22,7 @@ public class Program implements Serializable{
 	private boolean grouped = false;
 	
 	public Program(String name, String process) {
-		
+		super();
 		this.name = name;
 		this.process = process;
 		downtimes = new ArrayList<Downtime>();
@@ -66,35 +59,6 @@ public class Program implements Serializable{
 		// Change this to > if you don't want to include banned programs in isTimeLimit ---------- OUTDATED
 		
 	}
-	
-	public void setEnforcementStage(EnforceStage stage) {
-		
-		this.stage = stage;
-		
-	}
-	
-	
-	public EnforceStage getStage() {
-		
-		return stage;
-		
-	}
-	
-	public void advanceStage() {
-		setStageEnforced(false);
-		switch(stage) {
-			case RUNNING:
-				stage = EnforceStage.WARN;
-				break;
-			case WARN:
-				stage = EnforceStage.ENFORCE;
-				break;
-			case ENFORCE:
-				stage = EnforceStage.SHUTDOWN;
-				break;
-		}
-		
-	}
 	public String getName() {
 
 		return name;
@@ -110,12 +74,6 @@ public class Program implements Serializable{
 		
 		return getDayLimits().size() > 0;
 		
-	}
-	public boolean stageEnforced() {
-		return stageEnforced;
-	}
-	public void setStageEnforced(boolean stageEnforced) {
-		this.stageEnforced = stageEnforced;
 	}
 	public void setWeekday(int day) {
 		

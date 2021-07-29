@@ -68,7 +68,7 @@ public class OS {
 				programs = new String[temp.length / 5];
 				int x = 0;
 				for (int i = 0; i < temp.length; i++) {
-					if (temp[i].contains("Image Name: ")) {
+					if (temp[i].contains("Image Name:")) {
 						programs[x] = temp[i].replaceAll("Image Name:", "").replaceAll("\s", "");
 						x++;
 					}

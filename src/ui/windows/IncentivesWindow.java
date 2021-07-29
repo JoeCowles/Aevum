@@ -1,10 +1,9 @@
 package ui.windows;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -45,7 +44,6 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JSlider;
 import java.awt.Component;
 import javax.swing.JSpinner;
 
@@ -479,7 +477,9 @@ public class IncentivesWindow extends JFrame{
 		
 	}
 	private void addProgramGroup(String name) {
-		
+		if(name == null || name.isEmpty()){
+			return;
+		}
 		ProgramGroup pg = new ProgramGroup(name);
 		Main.groups.add(pg);
 		ProgramCard card = new ProgramCard(name, 200, 30);
@@ -513,6 +513,15 @@ public class IncentivesWindow extends JFrame{
 				
 			}
 		});
+		card.deleteBtn().addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e){
+
+				
+
+			}
+		});
+		selectedPg(pg.getName());
 		setVisible(true);
 		
 	}
@@ -607,7 +616,17 @@ public class IncentivesWindow extends JFrame{
 
 					}
 				});
+				card.deleteBtn().addMouseListener(new MouseAdapter(){
 
+					@Override
+					public void mouseClicked(MouseEvent e){
+						
+						selectedPg.getIncentives().remove(Main.searchPrograms(card.getName()));
+						list.remove(card);
+						setVisible(true);
+
+					}
+				});
 			}
 
 		});
@@ -643,21 +662,30 @@ public class IncentivesWindow extends JFrame{
 
 					}
 				});
+				card.deleteBtn().addMouseListener(new MouseAdapter(){
 
+					@Override
+					public void mouseClicked(MouseEvent e){
+						
+						selectedPg.getPrograms().remove(Main.searchPrograms(card.getName()));
+						programList.remove(card);
+						setVisible(true);
+						
+					}
+				});
 			}
 
 		});
+
 		card.setBorder(new MatteBorder(0, 0, 1, 0, Colors.accent));
 		programList.add(card);
 		setVisible(true);
-		
 	}
 	private boolean compContains(JComponent com, Component child) {
 		for(Component comp : com.getComponents()) {
 			
 			if(comp.equals(child)) {
 				return true;
-				
 			}
 		}
 		return false;

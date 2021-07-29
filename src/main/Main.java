@@ -2,18 +2,13 @@ package main;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Timer;
 
 import tracking.Monitor;
 import tracking.Program;
 import tracking.ProgramGroup;
-import ui.InputWindow;
-import ui.windows.DowntimeWindow;
 import ui.windows.IncentivesWindow;
-import ui.windows.LoginWindow;
-import ui.windows.MainGUI;
 import ui.windows.ProgramLimitsWindow;
 import utils.FileSystem;
 import utils.OS;
@@ -67,7 +62,7 @@ public class Main {
 	public static void debug() {
 		os = new OS();
 		//InputWindow in = new InputWindow("name");
-		//plw = new ProgramLimitsWindow();
+		plw = new ProgramLimitsWindow();
 		IncentivesWindow win = new IncentivesWindow();
 		//DowntimeWindow dw = new DowntimeWindow(LocalTime.now(), LocalTime.MIDNIGHT);
 		//LoginWindow win = new LoginWindow();
@@ -118,4 +113,5 @@ public class Main {
 		}
 		return pGroup;
 	}
+
 }

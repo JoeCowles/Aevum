@@ -42,7 +42,7 @@ public class Monitor extends TimerTask{
 					program.setTimeLeft(program.timeLeftSecs() - (int) (Main.REFRESH_RATE / 1000));
 					System.out.println(
 							"Program running: " + program.getName() + "  New Time left: " + program.timeLeftSecs());
-					Enforcer.Enforce(program);
+					Enforcer.enforce(program);
 				}
 				
 
@@ -58,6 +58,7 @@ public class Monitor extends TimerTask{
 				if(runningPrograms.contains(p.getProcess())) {
 					incentivesRunning = true;
 					group.setTimeRemaining(group.getTimeRemaining() - (int) (Main.REFRESH_RATE / 1000));
+					Enforcer.enforceGroup(group);
 				}
 			}
 			
@@ -76,6 +77,7 @@ public class Monitor extends TimerTask{
 				if(programsRunning) {
 					
 					group.setTimeRemaining(group.getTimeRemaining() + (int)((Main.REFRESH_RATE / 1000) * group.getRatio()));
+					Enforcer.enforceGroup(group);
 					
 				}
 				

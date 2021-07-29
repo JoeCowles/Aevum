@@ -2,7 +2,8 @@ package tracking;
 
 import java.util.ArrayList;
 
-public class ProgramGroup {
+public class ProgramGroup extends TrackedObj{
+
 
 	private ArrayList<Program> programs;
 	private ArrayList<Program> incentives;
@@ -13,7 +14,7 @@ public class ProgramGroup {
 	private int timeRemaining;
 	
 	public ProgramGroup(String name) {
-		
+		super();
 		this.name = name;
 		ratio = 1.0f;
 		programs = new ArrayList<Program>();
